@@ -27,8 +27,8 @@
 3. [Step 3 — Implement `NetworkDevice` class](#step-3--implement-networkdevice-class)
 4. [Step 4 — Implement parser helpers](#step-4--implement-parser-helpers)
 5. [Step 5 — Wire up `main.py`](#step-5--wire-up-mainpy)
-6. [Step 6 - Impliment the Direct Execution Check](#step-6---impliment-the-direct-execution-check)
-7. [Step 7 — Print + log required messages](#step-7--print--log-required-messages)
+6. [Step 6 — Print + log required messages](#step-6--print--log-required-messages)
+7. [Step 7 - Impliment the Direct Execution Check](#step-7---impliment-the-direct-execution-check)
 8. [Step 8 — Refactor & tidy](#step-8--refactor--tidy)
 9. [Step 9 — Commit, push, and open PR](#step-9--commit-push-and-open-pr)
 
@@ -159,23 +159,7 @@ Wrap your execution code in a `main()` function.
 **Log marker:**  
 `[DEVICE_SUMMARY]`
 
-## Step 6 - Impliment the Direct Execution Check
-
-**Goal:** Require that the code is executed directly from the `main.py` file
-
-**What to do:**
-Impliment the Direct Execution Check
-Include a log message before the `main()` function for `[LAB1-START]`
-Include a log message after the `main()` function for `[LAB1-END]`
-
-**You're done when:**
-
-- Your main function only executes if called directly
-
-**Log Marker**
-`[LAB1-START, LAB1-END]`
-
-## Step 7 — Print + log required messages
+## Step 6 — Print + log required messages
 
 **Goal:** Echo required lines for grading.
 
@@ -197,6 +181,22 @@ After each print, log:
 
 **`loggging` marker to add:**  
 `[INTERFACE_MSG, DEVICE_MSG, VLAN_MSG]`
+
+## Step 7 - Impliment the Direct Execution Check
+
+**Goal:** Require that the code is executed directly from the `main.py` file
+
+**What to do:**
+Impliment the Direct Execution Check
+Include a log message before the `main()` function for `[LAB1-START]`
+Include a log message after the `main()` function for `[LAB1-END]`
+
+**You're done when:**
+
+- Your main function only executes if called directly
+
+**Log Marker**
+`[LAB1-START, LAB1-END]`
 
 ## Step 8 — Refactor & tidy
 
@@ -261,7 +261,7 @@ Commit your changes; push; open a PR targeting `main`.
 | Step 6 | VLAN message logged (`VLAN_MSG`) | 5 |
 | Step 7 | Lab Start message logged (`LAB1-START`) | 5 |
 | Step 7 | Lab End message logged (`LAB1-END`) | 5 |
-| Step 8 | Clean module structure (class + parser functions imported and used) | 10 |
+| Step 8 | Clean module structure (class + parser functions imported and used) | 15 |
 | Step 9 | Commit, push, and PR opened; logs present with start/end markers | 5 |
 | **Total** |  | **75** |
 
