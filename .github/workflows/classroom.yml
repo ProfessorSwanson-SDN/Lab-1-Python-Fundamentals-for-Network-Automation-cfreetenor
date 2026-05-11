@@ -1,0 +1,199 @@
+name: Autograding
+
+on: [push]
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      checks: write
+      actions: read
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      if: hashFiles('requirements.txt') != ''
+      continue-on-error: true
+      run: pip install -r requirements.txt
+
+    - name: Prepare logs
+      continue-on-error: true
+      run: |
+        mkdir -p logs
+        touch logs/lab.log
+
+    - name: Run student script
+      continue-on-error: true
+      timeout-minutes: 5
+      run: |
+        python main.py || true
+
+    - name: Grade - Dependencies available
+      id: grade-dependencies
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 2 - DEPENDENCIES_AVAILABLE"
+        setup-command: ""
+        command: 'python -c "import yaml, json, xml.etree.ElementTree, csv"'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Parse JSON success marker
+      id: grade-parse-json
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 4 - PARSE_JSON_SUCCESS"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "PARSE_JSON_SUCCESS" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Parse YAML success marker
+      id: grade-parse-yaml
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 4 - PARSE_YAML_SUCCESS"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "PARSE_YAML_SUCCESS" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Parse XML success marker
+      id: grade-parse-xml
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 4 - PARSE_XML_SUCCESS"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "PARSE_XML_SUCCESS" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Parse CSV success marker
+      id: grade-parse-csv
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 4 - PARSE_CSV_SUCCESS"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "PARSE_CSV_SUCCESS" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Device summary marker
+      id: grade-device-summary
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 5 - DEVICE_SUMMARY"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "DEVICE_SUMMARY" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Interface message marker
+      id: grade-interface-msg
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 6 - INTERFACE_MSG"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "INTERFACE_MSG" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Device message marker
+      id: grade-device-msg
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 6 - DEVICE_MSG"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "DEVICE_MSG" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - VLAN message marker
+      id: grade-vlan-msg
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 6 - VLAN_MSG"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -q "VLAN_MSG" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Lab start marker
+      id: grade-lab-start
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 7 - LAB1-START or LAB1_START"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -Eq "LAB1[-_]START" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Lab end marker
+      id: grade-lab-end
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 7 - LAB1-END or LAB1_END"
+        setup-command: ""
+        command: 'test -f logs/lab.log && grep -Eq "LAB1[-_]END" logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Grade - Module structure
+      id: grade-module-structure
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 8 - MODULE_STRUCTURE"
+        setup-command: ""
+        command: 'test -f main.py && test -f src/parser_utils.py && test -f src/network_device.py && grep -Eq "from src\.parser_utils import|import src\.parser_utils" main.py && grep -Eq "from src\.network_device import|import src\.network_device" main.py'
+        timeout: 10
+        max-score: 15
+
+    - name: Grade - Log file present
+      id: grade-log-present
+      if: always()
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: "Step 9 - LOG_FILE_PRESENT"
+        setup-command: ""
+        command: 'test -s logs/lab.log'
+        timeout: 10
+        max-score: 5
+
+    - name: Autograding Reporter
+      if: always()
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        GRADE_DEPENDENCIES_RESULTS: "${{steps.grade-dependencies.outputs.result}}"
+        GRADE_PARSE_JSON_RESULTS: "${{steps.grade-parse-json.outputs.result}}"
+        GRADE_PARSE_YAML_RESULTS: "${{steps.grade-parse-yaml.outputs.result}}"
+        GRADE_PARSE_XML_RESULTS: "${{steps.grade-parse-xml.outputs.result}}"
+        GRADE_PARSE_CSV_RESULTS: "${{steps.grade-parse-csv.outputs.result}}"
+        GRADE_DEVICE_SUMMARY_RESULTS: "${{steps.grade-device-summary.outputs.result}}"
+        GRADE_INTERFACE_MSG_RESULTS: "${{steps.grade-interface-msg.outputs.result}}"
+        GRADE_DEVICE_MSG_RESULTS: "${{steps.grade-device-msg.outputs.result}}"
+        GRADE_VLAN_MSG_RESULTS: "${{steps.grade-vlan-msg.outputs.result}}"
+        GRADE_LAB_START_RESULTS: "${{steps.grade-lab-start.outputs.result}}"
+        GRADE_LAB_END_RESULTS: "${{steps.grade-lab-end.outputs.result}}"
+        GRADE_MODULE_STRUCTURE_RESULTS: "${{steps.grade-module-structure.outputs.result}}"
+        GRADE_LOG_PRESENT_RESULTS: "${{steps.grade-log-present.outputs.result}}"
+      with:
+        runners: grade-dependencies,grade-parse-json,grade-parse-yaml,grade-parse-xml,grade-parse-csv,grade-device-summary,grade-interface-msg,grade-device-msg,grade-vlan-msg,grade-lab-start,grade-lab-end,grade-module-structure,grade-log-present
