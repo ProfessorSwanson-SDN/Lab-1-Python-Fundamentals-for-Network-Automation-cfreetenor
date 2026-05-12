@@ -196,4 +196,17 @@ jobs:
         GRADE_MODULE_STRUCTURE_RESULTS: "${{steps.grade-module-structure.outputs.result}}"
         GRADE_LOG_PRESENT_RESULTS: "${{steps.grade-log-present.outputs.result}}"
       with:
-        runners: grade-dependencies,grade-parse-json,grade-parse-yaml,grade-parse-xml,grade-parse-csv,grade-device-summary,grade-interface-msg,grade-device-msg,grade-vlan-msg,grade-lab-start,grade-lab-end,grade-module-structure,grade-log-present
+        runners: |
+          grade-dependencies
+          grade-parse-json
+          grade-parse-yaml
+          grade-parse-xml
+          grade-parse-csv
+          grade-device-summary
+          grade-interface-msg
+          grade-device-msg
+          grade-vlan-msg
+          grade-lab-start
+          grade-lab-end
+          grade-module-structure
+          grade-log-present
