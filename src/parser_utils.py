@@ -1,58 +1,67 @@
 import json
-import csv
-import logging
 import yaml
 import xml.etree.ElementTree as ET
+import csv
+import logging
 
-
-def parse_json(filepath):
+def parse_json(file_path):
     try:
-        with open(filepath, "r") as file:
+        with open(file_path, "r") as file:
             data = json.load(file)
-
-        logging.info("PARSE_JSON_SUCCESS")
-        return data
-
-    except (FileNotFoundError, json.JSONDecodeError) as error:
-        logging.error(f"PARSE_JSON_ERROR: {error}")
-        return []
-
-
-def parse_yaml(filepath):
+            logging.info("PARSE_JSON_SUCCESS")
+            return data
+        
+    except FileNotFoundError:
+        logging.error("PARSE_JSON_ERROR")
+        return None
+    
+    except json.JSONDecodeError:
+        logging.error("PARSE_JSON_ERROR")
+        return None
+    
+def parse_yaml(file_path):
     try:
-        with open(filepath, "r") as file:
+        with open(file_path, "r") as file:
             data = yaml.safe_load(file)
+            logging.info("PARSE_YAML_SUCCESS")
+            return data
 
-        logging.info("PARSE_YAML_SUCCESS")
-        return data
+    except FileNotFoundError:
+        logging.error("PARSE_YAML_ERROR")
+        return None
 
-    except (FileNotFoundError, yaml.YAMLError) as error:
-        logging.error(f"PARSE_YAML_ERROR: {error}")
-        return []
+    except yaml.YAMLError:
+        logging.error("PARSE_YAML_ERROR")
+        return None
 
-
-def parse_xml(filepath):
+def parse_xml(file_path):
     try:
-        tree = ET.parse(filepath)
+        tree = ET.parse(file_path)
         root = tree.getroot()
-
         logging.info("PARSE_XML_SUCCESS")
         return root
 
-    except (FileNotFoundError, ET.ParseError) as error:
-        logging.error(f"PARSE_XML_ERROR: {error}")
-        return []
+    except FileNotFoundError:
+        logging.error("PARSE_XML_ERROR")
+        return None
 
+    except ET.ParseError:
+        logging.error("PARSE_XML_ERROR")
+        return None
 
-def parse_csv(filepath):
+def parse_csv(file_path):
     try:
-        with open(filepath, "r", newline="") as file:
+        with open(file_path, "r") as file:
             reader = csv.DictReader(file)
             data = list(reader)
+            logging.info("PARSE_CSV_SUCCESS")
+            return data
 
-        logging.info("PARSE_CSV_SUCCESS")
-        return data
+    except FileNotFoundError:
+        logging.error("PARSE_CSV_ERROR")
+        return None
 
-    except (FileNotFoundError, csv.Error) as error:
-        logging.error(f"PARSE_CSV_ERROR: {error}")
-        return []
+    except csv.Error:
+        logging.error("PARSE_CSV_ERROR")
+        return None
+
