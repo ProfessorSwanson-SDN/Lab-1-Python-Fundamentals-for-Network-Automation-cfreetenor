@@ -182,18 +182,18 @@ jobs:
       if: always()
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        GRADE-DEPENDENCIES_RESULTS: "${{steps.grade-dependencies.outputs.result}}"
-        GRADE-PARSE-JSON_RESULTS: "${{steps.grade-parse-json.outputs.result}}"
-        GRADE-PARSE-YAML_RESULTS: "${{steps.grade-parse-yaml.outputs.result}}"
-        GRADE-PARSE-XML_RESULTS: "${{steps.grade-parse-xml.outputs.result}}"
-        GRADE-PARSE-CSV_RESULTS: "${{steps.grade-parse-csv.outputs.result}}"
-        GRADE-DEVICE-SUMMARY_RESULTS: "${{steps.grade-device-summary.outputs.result}}"
-        GRADE-INTERFACE-MSG_RESULTS: "${{steps.grade-interface-msg.outputs.result}}"
-        GRADE-DEVICE-MSG_RESULTS: "${{steps.grade-device-msg.outputs.result}}"
-        GRADE-VLAN-MSG_RESULTS: "${{steps.grade-vlan-msg.outputs.result}}"
-        GRADE-LAB-START_RESULTS: "${{steps.grade-lab-start.outputs.result}}"
-        GRADE-LAB-END_RESULTS: "${{steps.grade-lab-end.outputs.result}}"
-        GRADE-MODULE-STRUCTURE_RESULTS: "${{steps.grade-module-structure.outputs.result}}"
-        GRADE-LOG-PRESENT_RESULTS: "${{steps.grade-log-present.outputs.result}}"
+        GRADE_DEPENDENCIES_RESULTS: "${{steps.grade-dependencies.outputs.result}}"
+        GRADE_PARSE_JSON_RESULTS: "${{steps.grade-parse-json.outputs.result}}"
+        GRADE_PARSE_YAML_RESULTS: "${{steps.grade-parse-yaml.outputs.result}}"
+        GRADE_PARSE_XML_RESULTS: "${{steps.grade-parse-xml.outputs.result}}"
+        GRADE_PARSE_CSV_RESULTS: "${{steps.grade-parse-csv.outputs.result}}"
+        GRADE_DEVICE_SUMMARY_RESULTS: "${{steps.grade-device-summary.outputs.result}}"
+        GRADE_INTERFACE_MSG_RESULTS: "${{steps.grade-interface-msg.outputs.result}}"
+        GRADE_DEVICE_MSG_RESULTS: "${{steps.grade-device-msg.outputs.result}}"
+        GRADE_VLAN_MSG_RESULTS: "${{steps.grade-vlan-msg.outputs.result}}"
+        GRADE_LAB_START_RESULTS: "${{steps.grade-lab-start.outputs.result}}"
+        GRADE_LAB_END_RESULTS: "${{steps.grade-lab-end.outputs.result}}"
+        GRADE_MODULE_STRUCTURE_RESULTS: "${{steps.grade-module-structure.outputs.result}}"
+        GRADE_LOG_PRESENT_RESULTS: "${{steps.grade-log-present.outputs.result}}"
       with:
         runners: grade-dependencies,grade-parse-json,grade-parse-yaml,grade-parse-xml,grade-parse-csv,grade-device-summary,grade-interface-msg,grade-device-msg,grade-vlan-msg,grade-lab-start,grade-lab-end,grade-module-structure,grade-log-present
